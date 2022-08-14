@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity >=0.8.15;
 
+//ERC721AX implementation: https://github.com/0xPhaze/ERC721A-Improved
 import "./ERC721A/ERC721AX.sol";
-import {Strings} from "./openzeppelin/Strings.sol";
-import "./openzeppelin/Ownable.sol";
-import "./openzeppelin/Context.sol";
+import {Strings} from "../lib/openzeppelin-contracts/contracts/utils/Strings.sol";
+import "../lib/openzeppelin-contracts/contracts/access/Ownable.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/Context.sol";
 
 error MintPriceNotPaid();
 error MaxSupply();
@@ -17,6 +18,15 @@ contract NFT is ERC721AX, Ownable {
     using Strings for uint256;
     string public baseURI;
     uint256 public constant MINT_PRICE = 0.08 ether;
+    bool public paused = true;
+
+    //events
+    event Pausedevnt(address account);
+
+    modifier Paused(){
+        if(paused)revert ContractPaused();
+        _;
+    }
 
     constructor(
         string memory _name,
@@ -42,10 +52,10 @@ contract NFT is ERC721AX, Ownable {
         _mint(user, quantity);
     }
 
-    function mintOne(address user) public payable {
-         if (msg.value != MINT_PRICE) {
-            revert MintPriceNotPaid();
-        }
+    function mintOne(address user) external { //public payable
+        //  if (msg.value != MINT_PRICE) {
+        //     revert MintPriceNotPaid();
+        // }
         _mint(user, 1);
     }
 
@@ -68,6 +78,11 @@ contract NFT is ERC721AX, Ownable {
                 ? string(abi.encodePacked(baseURI, tokenId.toString()))
                 : "";
     }
+
+    function setPaused(bool _paused) public onlyOwner{
+    paused = _paused;
+  emit Pausedevnt(msg.sender);
+}
 
     function withdrawPayments(address payable payee) external onlyOwner {
         uint256 balance = address(this).balance;
