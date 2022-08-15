@@ -5,7 +5,7 @@ import {DSTestPlus} from "solmate/test/utils/DSTestPlus.sol";
 import {Vm} from "forge-std/Vm.sol";
 
 import "../src/ERC721A/ERC721AX.sol";
-import {NFT} from "../src/NFTAX.sol";
+import {NFTAX} from "../src/NFTAX.sol";
 
 contract ERC721AXTest is DSTestPlus {
     Vm vm = Vm(HEVM_ADDRESS);
@@ -15,10 +15,10 @@ contract ERC721AXTest is DSTestPlus {
     address chris = address(0x103);
     address tester = address(this);
 
-    NFT token;
+    NFTAX token;
 
     function setUp() public {
-        token = new NFT("Token", "TKN","https://ipfs.io/ipfs/QmSxLQ6K7s3yvUWP4VpkBvhfyG1rJBcDY5gAKaScihAKxx/", 1, 30, 10);
+        token = new NFTAX("Token", "TKN","https://ipfs.io/ipfs/QmSxLQ6K7s3yvUWP4VpkBvhfyG1rJBcDY5gAKaScihAKxx/", 1, 30, 10);
 
         vm.label(alice, "Alice");
         vm.label(bob, "Bob");

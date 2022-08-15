@@ -13,7 +13,7 @@ error NonExistentTokenURI();
 error WithdrawTransfer();
 error ContractPaused();
 
-contract NFT is ERC721AX, Ownable {
+contract NFTAX is ERC721AX, Ownable {
 
     using Strings for uint256;
     string public baseURI;

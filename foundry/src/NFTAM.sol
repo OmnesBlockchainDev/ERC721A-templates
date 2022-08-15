@@ -13,7 +13,7 @@ error NonExistentTokenURI();
 error WithdrawTransfer();
 error ContractPaused();
 
-contract NFT is ERC721A, Ownable {
+contract NFTAM is ERC721A, Ownable {
 
     using Strings for uint256;
     string public baseURI;
@@ -43,9 +43,9 @@ contract NFT is ERC721A, Ownable {
         _mint(recipient, 1);
     }
 
-     function safemint(address user, uint256 quantity) external {
+     function mint(address user, uint256 quantity) external {
         // if (quantity > maxPerTx) revert MintExceedsMaxPerTx();
-        _safeMint(user, quantity);
+        _mint(user, quantity);
     }
 
     function mintOne(address user) external { //public payable
